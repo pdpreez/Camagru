@@ -5,6 +5,13 @@ require_once("header.php");
 ?>
 
 <html>
+<div>
+	<form id="upload" method="POST" action="save_uploaded.php" enctype="multipart/form-data">
+		Upload your own picture
+		<input type="file" name="file" id="file">
+		<input type="submit" value="Click to upload" name="submit">
+	</form>
+</div>
 <div class="webcam">
 	<video id="video" height="300" width="400"> </video>
 	<a href="#" id="click" class="webcam-click-button">Click</a>

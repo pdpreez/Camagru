@@ -12,6 +12,7 @@ $sub = $_POST['submit'];
 if ($sub == 'Login')
 {
     try{
+		$pwd = hash('md5', $pwd);
         $query = $pdo->prepare("SELECT count(*) FROM users WHERE username=? AND passwd=? AND active=1");
         $query->execute([$usr, $pwd]);
 		$result = $query->fetch();

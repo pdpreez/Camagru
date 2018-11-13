@@ -44,6 +44,7 @@ echo "<br>" . "images table created successfully";
 
 $table = "CREATE TABLE IF NOT EXISTS likes (
 	id int(9) unsigned AUTO_INCREMENT PRIMARY KEY,
+	img_id int(9) unsigned NOT NULL,
 	u_id int(9) unsigned NOT NULL,
 	liked BIT DEFAULT false
 );";
@@ -55,7 +56,9 @@ echo "<br>" . "likes table created successfully";
 $table = "CREATE TABLE IF NOT EXISTS comments(
 
 	id int(9) unsigned AUTO_INCREMENT PRIMARY KEY,
+	img_id int(9) unsigned NOT NULL,
 	u_id int(9) unsigned NOT NULL,
+	created DATETIME DEFAULT CURRENT_TIMESTAMP,
 	comments VARCHAR(256)
 
 );";
@@ -64,8 +67,15 @@ $conn->query("use `$mydb`");
 $conn->exec($table);
 echo "<br>" . "comments table created successfully";
 
-$conn->query("INSERT INTO users (username, email, passwd, active) VALUES ('ppreez', 'ppreez@email.com', 'secret', true)");
-$conn->query("INSERT INTO users (username, email, passwd, active) VALUES ('rhohls', 'rhohls@email.com', 'shhh', true)");
-$conn->query("INSERT INTO users (username, email, passwd, active) VALUES ('dponsonb', 'dponsonb@email.com', 'hush', true)");
+$pwd = 'secret';
+
+$pwd1 = hash('md5', 'secret');
+$pwd2 = hash('md5', 'shhh');
+$pwd3 = hash('md5', 'hush');
+
+$query = $conn->prepare("INSERT INTO users (username, email, passwd, active) VALUES (?, ?, ?, true)");
+$query->execute(['ppreez', 'pdpreez412@gmail.com', $pwd1]);
+$query->execute(['rhohls', 'rhohls@email.com', $pwd2]);
+$query->execute(['dponsonb', 'dponsonb@email.com', $pwd3]);
 
 ?>

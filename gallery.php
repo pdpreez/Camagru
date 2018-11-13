@@ -14,7 +14,7 @@ foreach($fetched as $img)
 	if ($img_name){
 		if (isset($_SESSION) && !empty($_SESSION['id']))
 			echo "<a href='./view_image.php?img=".$img_id."'>";
-		echo "<img src='{$img_name}' class='gallery'/></a>";
+		echo "<img src='{$img_name}' class='gallery'></a>";
 	}
 }
 

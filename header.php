@@ -33,5 +33,8 @@ session_start();
 	   			 }
 				?>
 		</div>
+		<div class='footer'>
+		<p>camagru &copy ppreez 2018 WTC_</p>
+		</div>
 	</body>
 </html>

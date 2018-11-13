@@ -30,8 +30,10 @@
 }
 
 body{
-    margin: 0;
-    background-color: aliceblue;
+	margin: 0;
+	margin-bottom: 45px;
+	background-color: aliceblue;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;	
 }
 
 .webcam{
@@ -75,6 +77,17 @@ body{
 	margin: 30px;
 }
 
+.footer{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 40px;
+	color: #505050;
+	text-align: end;
+	background-color: cadetblue;
+}
+
 #likes{
 	border: 3px solid cadetblue;
 	text-decoration: none;
@@ -82,4 +95,22 @@ body{
 	margin: 30px;
 	padding: 3px;
 	border-radius: 30%;
+}
+
+#upload{
+	display: grid;
+	margin: 5 auto;
+	width: 400px;
+	border: 10px solid grey;
+	background-color: cadetblue;
+}
+
+#comment_form{
+	margin: 30px;
+}
+
+#sticker{
+	width: 100px;
+	height: 100px;
+	margin: 30px;
 }

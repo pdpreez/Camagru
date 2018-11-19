@@ -20,8 +20,8 @@ if (isset($_SESSION) && !empty($_SESSION['id'])){
 	$stmt = $pdo->prepare("SELECT * FROM images WHERE img_name=?");
 	$stmt->execute([$img_dir.$name]);
 	$result = $stmt->fetch();
+	$img_id = $result['id'];
 
-
-	header("Location: webcam.php");
+	header("Location: edit_image_front.php?id=$img_id");
 }
 ?>

@@ -22,11 +22,13 @@ if (isset($_SESSION) && !empty($_SESSION['id'])){
 	$result = $query->fetch();
 
 	if ($result['notify'] == 1){
+		$link = "http://" . $_SERVER['HTTP_HOST'];
+		$link .= str_replace('save_comment', 'index', $_SERVER['SCRIPT_NAME']);
 		$to = $result['email'];
 		$subject = "Someone commented on your image on Camagru!";
 		$txt = "Hey there, " . $result['username'];
 		$txt .= "!\nGood news! Someone commented on your image.\nGo to ";
-		$txt .= "http://localhost:8080/Web/Camagru/index.php to log in and see the comment.";
+		$txt .= $link . " to log in and see the comment.";
 		$headers = "From: noreply@camagru.co.za";
 		mail($to,$subject,$txt,$headers);
 	}

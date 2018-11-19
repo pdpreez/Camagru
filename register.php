@@ -13,21 +13,30 @@ $pwd2 = $_POST['passwdconfirm'];
 
 if ($pwd === $pwd2 && !empty($pwd) && !empty($usr) && !empty($email)){
     try{
-		$pwd = hash('md5', $pwd);
-        $query = $pdo->prepare("INSERT INTO users (username, email, passwd) VALUES (:usr, :email, :pwd)");
-        $query->execute(['usr' => $usr, 'email' => $email, 'pwd' => $pwd]);
-		$_SESSION['usr'] = $usr;
+		if (preg_match( '~[A-Z]~', $pwd) && preg_match( '~[a-z]~', $pwd) && preg_match( '~\d~', $pwd) && (strlen( $pwd) > 8)){
+			$pwd = hash('md5', $pwd);
+			$id = uniqid();
+			$query = $pdo->prepare("INSERT INTO users (username, email, passwd, uniqid) VALUES (:usr, :email, :pwd, :uniqid)");
+			$query->execute(['usr' => $usr, 'email' => $email, 'pwd' => $pwd, 'uniqid' => $id]);
+			$_SESSION['usr'] = $usr;
 
-		$to = $email;
-		$subject = "Activate your Camagru account";
-		$txt = "Hey there, " . $usr . "!\n";
-		$txt .= "Please click the following link to verify your account registration: \n";
-		$txt .= "http://localhost:8080/Web/Camagru/verify.php?usr=$usr&email=$email";
-		$headers = "From: noreply@camagru.com";
+			$link = "http://" . $_SERVER['HTTP_HOST'];
+			$link .= str_replace('register', 'verify', $_SERVER['SCRIPT_NAME']);
+			$to = $email;
+			$subject = "Activate your Camagru account";
+			$txt = "Hey there, " . $usr . "!\n";
+			$txt .= "Please click the following link to verify your account registration: \n";
+			$txt .= $link . "?usr=$usr&email=$email&id=$id";
+			$headers = "From: noreply@camagru.com";
 
-		mail($to,$subject,$txt,$headers);
-		header("Location: signout.php");
-    }
+			mail($to,$subject,$txt,$headers);
+			header("Location: signout.php");
+		}
+	else{
+		header("Location: register_front.php");
+		die();
+		}
+	}
     catch (PDOException $err)
     {
         header("Location: index.php");

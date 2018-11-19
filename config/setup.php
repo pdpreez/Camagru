@@ -2,10 +2,6 @@
 
 require_once("database.php");
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 try {
 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -22,6 +18,7 @@ $table = "CREATE TABLE IF NOT EXISTS users (
 	username VARCHAR(32) NOT NULL UNIQUE KEY,
     email VARCHAR(64) NOT NULL UNIQUE KEY,
     passwd VARCHAR(128),
+	uniqid VARCHAR(32),
 	notify BIT NOT NULL DEFAULT true,
 	active BIT NOT NULL DEFAULT false
     );";
@@ -73,9 +70,13 @@ $pwd1 = hash('md5', 'secret');
 $pwd2 = hash('md5', 'shhh');
 $pwd3 = hash('md5', 'hush');
 
-$query = $conn->prepare("INSERT INTO users (username, email, passwd, active) VALUES (?, ?, ?, true)");
-$query->execute(['ppreez', 'pdpreez412@gmail.com', $pwd1]);
-$query->execute(['rhohls', 'rhohls@email.com', $pwd2]);
-$query->execute(['dponsonb', 'dponsonb@email.com', $pwd3]);
+$id1 = uniqid();
+$id3 = uniqid();
+$id2 = uniqid();
+
+$query = $conn->prepare("INSERT INTO users (username, email, passwd, active, uniqid) VALUES (?, ?, ?, true, ?)");
+$query->execute(['ppreez', 'pdpreez412@gmail.com', $pwd1, $id1]);
+$query->execute(['rhohls', 'rhohls@email.com', $pwd2, $id2]);
+$query->execute(['dponsonb', 'dponsonb@email.com', $pwd3, $id3]);
 
 ?>

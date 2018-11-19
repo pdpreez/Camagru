@@ -18,9 +18,12 @@ if (!empty($email))
 	$query->execute([$email]);
 	$addr = $query->fetch();
 	if ($addr['count(id)'] == 1){
+		$link = "http://" . $_SERVER['HTTP_HOST'];
+		$link .= str_replace('password_reset', 'verify', $_SERVER['SCRIPT_NAME']);
+		$to = $email;
 		$id = $addr['id'];
 		$usr = $addr['username'];
-		$text .= "http://localhost:8080/Web/Camagru/password_reset.php?id=$id&usr=$usr&email=$email";
+		$text .= $link . "?id=$id&usr=$usr&email=$email";
 		mail($to,$subject,$text,$headers);
 		header("Location: index.php");
 	}

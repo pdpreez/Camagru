@@ -30,11 +30,13 @@ if (isset($_SESSION) && !empty($_SESSION['id'])){
 
 		if ($result['notify'] == 1){
 
+			$link = "http://" . $_SERVER['HTTP_HOST'];
+			$link .= str_replace('like_image.php', 'index.php', $_SERVER['SCRIPT_NAME']);
 			$to = $result['email'];
 			$subject = "Someone liked your image on Camagru!";
 			$txt = "Hey there, " . $result['username'];
 			$txt .= "!\nGood news! Someone liked your image.\nGo to ";
-			$txt .= "http://localhost:8080/Web/Camagru/index.php to log in and see it.";
+			$txt .= $link ." to log in and see it.";
 			$headers = "From: noreply@camagru.co.za";
 			mail($to,$subject,$txt,$headers);
 		}
